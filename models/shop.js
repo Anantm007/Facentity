@@ -1,4 +1,6 @@
 const mongoose=require('mongoose')
+const validator=require('validator')
+const bcrypt=require('bcryptjs')
 
 const shopSchema= new mongoose.Schema(
     {
@@ -40,11 +42,13 @@ const shopSchema= new mongoose.Schema(
     }
 )
 
-// shopSchema.virtual('transactionHistory',{
-//     ref: 'Transaction',
-//     localField: '_id',
-//     foreignField: 'shop'
-// })
+shopSchema.pre('save',async function(next){
+    const shop=this
+    if(shop.isModified('password')){
+        shop.password=await bcrypt.hash(shop.password,8)
+    }
+    next()
+})
 
 const Shop=mongoose.model('Shop',shopSchema)
 
