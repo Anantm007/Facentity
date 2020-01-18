@@ -47,7 +47,7 @@ app.get("/api", (req, res) => {
 
 app.use('/user',userRouter)
 app.use('/shop',shopRouter)
-
+app.use('/transaction', require("./routes/transaction"));
 
 // Starting the server
 app.listen(process.env.PORT || 3000, ()=>{
