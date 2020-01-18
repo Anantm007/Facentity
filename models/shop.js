@@ -6,6 +6,18 @@ const shopSchema= new mongoose.Schema(
             type: String,
             required: true
         },
+        email: {
+            type: String,
+            unique: true,
+            required: true,
+            trim: true,
+            lowercase: true,
+            validate(value){
+                if(!validator.isEmail(value)){
+                    throw new Error('Email is invalid')
+                }
+            }
+        },
         password: {
             type: String,
             trim: true,
@@ -15,17 +27,24 @@ const shopSchema= new mongoose.Schema(
                     throw new Error('Password should not contain password')
                 }
             }
-        }
+        },
+        transactions: [{
+            transaction: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'Transactions'
+            }
+        }]
     },{
         timestamps: true
     }
 )
 
-shopSchema.virtual('transactionHistory',{
-    ref: 'Transaction',
-    localField: '_id',
-    foreignField: 'shop'
-})
+// shopSchema.virtual('transactionHistory',{
+//     ref: 'Transaction',
+//     localField: '_id',
+//     foreignField: 'shop'
+// })
 
 const Shop=mongoose.model('Shop',shopSchema)
 

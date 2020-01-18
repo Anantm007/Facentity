@@ -47,17 +47,24 @@ const userSchema=new mongoose.Schema(
             default: 0,
             min: 0,
             required: true
-        }
+        },
+        transactions: [{
+            transaction: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'Transactions'
+            }
+        }]
     },{
         timestamps: true
     }
 )
 
-userSchema.virtual('transactionHistory',{
-    ref: 'Transaction',
-    localField: '_id',
-    foreignField: 'user'
-})
+// userSchema.virtual('transactionHistory',{
+//     ref: 'Transaction',
+//     localField: '_id',
+//     foreignField: 'user'
+// })
 
 userSchema.methods.getPublicProfile=function(){
     const user=this
