@@ -23,7 +23,7 @@ const userSchema=new mongoose.Schema(
             }
         },
         pin: {
-            type: Number,
+            type: String,
             minlength: 4,
             maxlength: 4,
             required: true
@@ -77,9 +77,9 @@ userSchema.statics.findByCredentials=async (email,password)=>{
 
 userSchema.pre('save',async function(next){
     const user=this
-    // if(user.isModified('pin')){
-    //     user.pin=await bcrypt.hash(user.pin,8)
-    // }
+    if(user.isModified('pin')){
+        user.pin=await bcrypt.hash(user.pin,8)
+    }
     if(user.isModified('password')){
         user.password=await bcrypt.hash(user.password, 8)
     }
