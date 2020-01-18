@@ -1,6 +1,7 @@
 const express=require('express')
 const app=express()
 const userRouter=require('./routes/user')
+const shopRouter=require('./router/shop')
 
 // const cors=require('cors')
 const bodyParser = require("body-parser");
@@ -42,7 +43,8 @@ app.get("/api", (req, res) => {
   });
 })
 
-app.use(userRouter)
+app.use('/user',userRouter)
+app.use('/shop',shopRouter)
 
 
 // Starting the server
