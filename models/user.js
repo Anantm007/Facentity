@@ -25,7 +25,6 @@ const userSchema=new mongoose.Schema(
         pin: {
             type: String,
             minlength: 4,
-            maxlength: 4,
             required: true
         },
         password: {
