@@ -3,6 +3,7 @@ const app=express()
 const userRouter=require('./routes/user')
 const shopRouter=require('./routes/shop')
 
+
 // const cors=require('cors')
 const bodyParser = require("body-parser");
 
@@ -23,10 +24,11 @@ mongoose.connect(process.env.MongoURI,{useNewUrlParser: true, useUnifiedTopology
 });
 
 app.set('view engine', 'ejs');
+app.use(express.static("views"))
 
 // Getting data in json format
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.json())
+app.use(bodyParser.json())
 
 // app.use(cors())
 

@@ -29,8 +29,16 @@ let transporter = nodemailer.createTransport({
 
 
 // Shop Login Page (landing page)
-router.get('/shop', async(req,res)=>{
-    return res.status(200).render('../views/shop/login.ejs');
+router.get('/login', async(req,res)=>{
+    return res.status(200).render('login-shop');
+})
+
+router.get('/:id', async(req,res)=>{
+    const shop=await Shop.findById(req.params.id)
+    return res.status(200).render('index-shop',{
+        shop: shop
+    });
+    // return res.send(user)
 })
 
 
@@ -97,15 +105,15 @@ router.get("/:id/payment", async(req, res) =>{
     const shop = await Shop.findById(req.params.id);
 
     if(shop)
-    {/*
-        return res.status(200).render('../views/shop/payment.ejs', {
+    {
+        return res.status(200).render('shopping-checkout', {
             shop: shop
-        });*/
+        });
 
-        return res.json({
-            success: true,
-            data: shop
-        })
+        // return res.json({
+        //     success: true,
+        //     data: shop
+        // })
     }
 
     return res.json({
@@ -224,6 +232,7 @@ router.post('/:id/payment', readFile, async(req, res) => {
 
 // List all the shop Transactions
 router.get("/:id/transactions", async(req, res) => {
+    const shop = await Shop.findById(req.params.id);
     await Transaction.find({shop: req.params.id}, (err, transactions) => {
         if(err)
         {
@@ -231,15 +240,16 @@ router.get("/:id/transactions", async(req, res) => {
                 success: false,
                 message: err
             })
-        }/*
-        return res.status(200).render('../views/shop/transactions.ejs', {
+        }
+        return res.status(200).render('selling-history', {
+            shop: shop,
             transactions
-        });*/
+        });
 
-        return res.json({
-            success: true,
-            data: transactions
-        })
+        // return res.json({
+        //     success: true,
+        //     data: transactions
+        // })
     })
 })
 

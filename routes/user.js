@@ -37,32 +37,32 @@ router.get('/users',async(req,res)=>{
 })
 
 router.get('/signin', async(req,res)=>{
-    // return res.status(200).render('../views/user/login.ejs');
-    return res.send('Hello')
+    return res.render('login');
+    // return res.send('Hello')
 })
 
 router.get('/:id', async(req,res)=>{
     const user=await User.findById(req.params.id)
-    // return res.status(200).render('../views/user/dashboard.js',{
-    //     user: user
-    // });
-    return res.send(user)
+    return res.status(200).render('index',{
+        user: user
+    });
+    // return res.send(user)
 })
 
-router.get('/:id/history', async(req,res)=>{
+router.get('/:id/trans-history', async(req,res)=>{
     const user=await User.findById(req.params.id)
-    // return res.status(200).render('../views/user/history.js',{
-    //     user: user
-    // });
-    return res.send(user)
+    return res.status(200).render('trans-history',{
+        user: user
+    });
+    // return res.send(user)
 })
 
 router.get('/:id/addMoney', async(req,res)=>{
     const user=await User.findById(req.params.id)
-    // return res.status(200).render('../views/user/addMoney.js',{
-    //     user: user
-    // });
-    return res.send(user)
+    return res.status(200).render('add-money',{
+        user: user
+    });
+    // return res.send(user)
 })
 
 router.post('/signup',async(req,res)=>{
