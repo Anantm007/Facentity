@@ -51,8 +51,10 @@ router.get('/:id', async(req,res)=>{
 
 router.get('/:id/trans-history', async(req,res)=>{
     const user=await User.findById(req.params.id)
+    const transactions = await Transaction.find({user: req.params.id})
     return res.status(200).render('trans-history',{
-        user: user
+        user,
+        transactions
     });
     // return res.send(user)
 })
@@ -85,19 +87,17 @@ router.post('/signin',async(req,res)=>{
         if(!user){
             throw new Error()
         }
-        res.send(user)
-        // res.redirect(`/${user._id}`)
+        res.redirect(`/user/${user._id}`)
     } catch(e){
         res.status(400).send(e)
     }
 })
 
 router.post('/:id/addMoney', async(req,res)=>{
-    console.log(req.body)
     try{
         const user=await User.findById(req.params.id)
-        var chargeAmount = req.body.amount;
-        user['wallet']+=chargeAmount
+        var chargeAmount = parseInt(req.body.amount);
+        user.wallet+=chargeAmount
         await user.save()
         res.send(user)
         // res.redirect(`/${user._id}`)

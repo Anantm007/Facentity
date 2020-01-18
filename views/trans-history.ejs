@@ -8,20 +8,17 @@
           <h1 class="h3 mb-4 text-gray-800">Transcation History</h1>
           <br><br>
 
+          <%transactions.forEach((transaction) => {%>
           <div class="">
             <div class="row">
-              <div class="col-xl-3 col-md-6 mb-4">
+              <div class="col-xl-8 col-md-6 mb-4">
                 <div class="card border-bottom-warning shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> Date </div>
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> Time </div>
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> Shop </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Amount $</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        <div class="text-s font-weight-bold text-warning text-uppercase mb-1">Date: <%=transaction.createdAt%> </div><br/>
+                        <div class="text-s font-weight-bold text-warning text-uppercase mb-1">ShopId: <%=transaction.shop%> </div><br/>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">Amount: Rs. <%=transaction.amount %></div>
                       </div>
                     </div>
                   </div>
@@ -29,7 +26,7 @@
               </div>
             </div>
           </div>
-
+        <%})%>
 
 
 

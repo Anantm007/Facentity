@@ -10,33 +10,33 @@
   </h1>
             <div class="container">
               <div class="row">
-                <div class="col-lg-2">
-                  <span>S.No.</span>
+                <div class="col-lg-4">
+                  <span style="color: black;">TRANSACTION ID</span>
                 </div>
                 <div class="col-lg-4">
-                  <span>Consumer Id</span>
+                  <span style="color: black;">CUSTOMER ID</span>
                 </div>
                 <div class="col-lg-4">
-                  <span>Amount</span>
+                  <span style="color: black;">AMOUNT</span>
                 </div>
               </div>
 
 
-              <!-- EJS RENDERING OF THE HISTORY OF MONEY ADDITION -->
+              <%transactions.forEach((transaction) => { %>
               <div class="">
                 <div class="row">
-                  <div class="col-lg-2">
-                    <span>  ...   </span>
+                  <div class="col-lg-4">
+                    <span>  <%=transaction._id%>   </span>
                   </div>
                   <div class="col-lg-4">
-                    <span>  ...  </span>
+                    <span>  <%=transaction.user%>  </span>
                   </div>
                   <div class="col-lg-4">
-                    <span>   ...  </span>
+                    <span>   <%=transaction.amount%>  </span>
                   </div>
                 </div>
               </div>
-
+              <% })%>
 
             </div>
 

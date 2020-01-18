@@ -83,15 +83,12 @@ router.post('/login', async(req, res) => {
           .json({ errors: [{ message: 'Invalid Credentials' }] });
       }
 
+     res.redirect(`/shop/${shop._id}`)
     /*
-      return res.status(200).render('../views/shop/dashboard.ejs', {
-        user
-      });
-    */
     return res.json({
         success: true,
         message: "User logged in"
-    })
+    })*/
 
     } catch (err) {
       console.error(err.message);

@@ -6,18 +6,20 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">
-            Add Money to wallet
+            Hey <%=user.name%>, Add Money to wallet
             <br><br>
             <div class="container-fluid">
               <div class="row">
                 <div class="col-lg-4">
-                  <input type="text"  class="form-control form-control-user" name="userid" placeholder="Enter your net banking ID" autofocus="on">
+                  <form action = "/user/<%=user._id%>/addMoney" method = "POST" >
+              <!--    <input type="text"  class="form-control form-control-user" name="userid" placeholder="Enter your net banking ID" autofocus="on">
                   <br>
                   <input type="password"  class="form-control form-control-user" name="password" placeholder="Password">
+                  <br>-->
+                  <input type="number"  class="form-control form-control-user" name="amount" placeholder="Enter amount">
                   <br>
-                  <input type="text"  class="form-control form-control-user" name="amount" placeholder="Enter amount of money to add">
-                  <br>
-                  <a href="#"> <button type="button" class="btn btn-primary" name="button">ADD MONEY</button> </a>
+                  <button type="button" class="btn btn-primary" name="button">ADD MONEY</button>
+              </form>
                 </div>
 
               </div>
