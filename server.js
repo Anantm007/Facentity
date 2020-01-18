@@ -1,7 +1,7 @@
 const express=require('express')
 const app=express()
 const userRouter=require('./routes/user')
-const shopRouter=require('./router/shop')
+const shopRouter=require('./routes/shop')
 
 // const cors=require('cors')
 const bodyParser = require("body-parser");

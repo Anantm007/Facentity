@@ -103,7 +103,7 @@ router.get("/:id/payment", async(req, res) =>{
         });*/
 
         return res.json({
-            success: shop,
+            success: true,
             data: shop
         })
     }
