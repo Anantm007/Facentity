@@ -36,7 +36,6 @@ router.get('/shop', async(req,res)=>{
 
 // Shop Register (One time only)
 router.post("/register", async(req, res)=> {
-    // console.log("hello")
     try {
         const shop = new Shop(req.body);
 
@@ -70,7 +69,6 @@ router.post('/login', async(req, res) => {
       }
 
       const isMatch = await bcrypt.compare(password,shop.password);
-      console.log(password, shop.password)
       if (!isMatch) {
         return res
           .status(400)
@@ -119,7 +117,6 @@ router.get("/:id/payment", async(req, res) =>{
   const readFile = async(req, res, next) => {
     try{
         lineReader.eachLine('data.txt', function(line, last) {
-          console.log(line);
           if (last) {
             req.name = line;
             next();
@@ -140,9 +137,7 @@ router.post('/:id/payment', readFile, async(req, res) => {
     const shop = await Shop.findById(req.params.id);    
     if(shop)
     {
-        console.log("HERE");
         const userName = req.name;
-        console.log("here",userName);     
 
         const user = await User.findOne({name: userName});
         if(!user)
