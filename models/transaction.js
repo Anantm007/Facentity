@@ -1,4 +1,6 @@
 const mongoose=require('mongoose')
+const User=require('./user')
+const Shop=require('./shop')
 
 const transactionSchema= new mongoose.Schema(
     {

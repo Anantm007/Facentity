@@ -1,5 +1,6 @@
 const express=require('express')
 const app=express()
+const userRouter=require('./routes/user')
 
 // const cors=require('cors')
 const bodyParser = require("body-parser");
@@ -24,6 +25,7 @@ app.set('view engine', 'ejs');
 
 // Getting data in json format
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.json())
 
 // app.use(cors())
 
@@ -39,6 +41,8 @@ app.get("/api", (req, res) => {
       message: "API running"
   });
 })
+
+app.use(userRouter)
 
 
 // Starting the server

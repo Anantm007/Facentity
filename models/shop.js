@@ -1,6 +1,7 @@
 const mongoose=require('mongoose')
 const validator=require('validator')
 const bcrypt=require('bcryptjs')
+const Transaction=require('./transaction')
 
 const shopSchema= new mongoose.Schema(
     {
@@ -24,6 +25,7 @@ const shopSchema= new mongoose.Schema(
             type: String,
             trim: true,
             minlength: 4,
+            required: true,
             validate(value){
                 if(value.includes("password")){
                     throw new Error('Password should not contain password')
@@ -33,8 +35,7 @@ const shopSchema= new mongoose.Schema(
         transactions: [{
             transaction: {
                 type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'Transactions'
+                ref: 'Transaction'
             }
         }]
     },{

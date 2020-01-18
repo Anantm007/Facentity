@@ -1,6 +1,7 @@
 const mongoose=require('mongoose')
 const validator=require('validator')
 const bcrypt=require('bcryptjs')
+const Transaction=require('./transaction')
 
 const userSchema=new mongoose.Schema(
     {
@@ -24,12 +25,14 @@ const userSchema=new mongoose.Schema(
         pin: {
             type: Number,
             minlength: 4,
-            maxlength: 4
+            maxlength: 4,
+            required: true
         },
         password: {
             type: String,
             trim: true,
             minlength: 4,
+            required: true,
             validate(value){
                 if(value.includes("password")){
                     throw new Error('Password should not contain password')
@@ -39,14 +42,12 @@ const userSchema=new mongoose.Schema(
         wallet: {
             type: Number,
             default: 0,
-            min: 0,
-            required: true
+            min: 0
         },
         transactions: [{
             transaction: {
                 type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'Transactions'
+                ref: 'Transaction'
             }
         }]
     },{
@@ -76,9 +77,9 @@ userSchema.statics.findByCredentials=async (email,password)=>{
 
 userSchema.pre('save',async function(next){
     const user=this
-    if(user.isModified('pin')){
-        user.pin=await bcrypt.hash(user.pin,8)
-    }
+    // if(user.isModified('pin')){
+    //     user.pin=await bcrypt.hash(user.pin,8)
+    // }
     if(user.isModified('password')){
         user.password=await bcrypt.hash(user.password, 8)
     }
