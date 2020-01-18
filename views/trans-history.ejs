@@ -1,0 +1,54 @@
+<%- include('partials/user/header.ejs') -%>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Transcation History</h1>
+          <br><br>
+
+          <%transactions.forEach((transaction) => {%>
+          <div class="">
+            <div class="row">
+              <div class="col-xl-8 col-md-6 mb-4">
+                <div class="card border-bottom-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-s font-weight-bold text-warning text-uppercase mb-1">Date: <%=transaction.createdAt%> </div><br/>
+                        <div class="text-s font-weight-bold text-warning text-uppercase mb-1">ShopId: <%=transaction.shop%> </div><br/>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">Amount: Rs. <%=transaction.amount %></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%})%>
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; FCB2749</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+<%- include('partials/user/footer.ejs') -%>
