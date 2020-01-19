@@ -7,7 +7,7 @@ const shopRouter=require('./routes/shop')
 // const cors=require('cors')
 const bodyParser = require("body-parser");
 
-// Mongoose 
+// Mongoose
 const mongoose = require('mongoose');
 
 // Config variables
@@ -45,11 +45,35 @@ app.get("/api", (req, res) => {
   });
 })
 
+app.get('/batexecute', function(req, res){
+  const { spawn } = require('child_process');
+const bat = spawn('cmd.exe', ['/k', 'run.bat']);
+
+bat.stdout.on('data', (data) => {
+  console.log(data.toString());
+});
+
+bat.stderr.on('data', (data) => {
+  console.error(data.toString());
+});
+
+bat.on('exit', (code) => {
+  console.log(`Child exited with code ${code}`);
+});
+
+res.render('webcamstarted');
+});
+
+app.get('/runbat', function(req, res){
+  res.render('runbat');
+});
+
+
 app.use('/user',userRouter)
 app.use('/shop',shopRouter)
 app.use('/transaction', require("./routes/transaction"));
 
 // Starting the server
-app.listen(process.env.PORT || 3000, ()=>{
-  console.log(`Server started on port ${process.env.PORT || 3000}`);
+app.listen(process.env.PORT || 3001, ()=>{
+  console.log(`Server started on port ${process.env.PORT || 3001}`);
 });

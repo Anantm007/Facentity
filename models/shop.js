@@ -37,7 +37,12 @@ const shopSchema= new mongoose.Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Transaction'
             }
-        }]
+        }],
+        wallet: {
+          type: Number,
+          min: 0,
+          default: 0
+        }
     },{
         timestamps: true
     }

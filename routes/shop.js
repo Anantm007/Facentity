@@ -53,7 +53,7 @@ router.post("/register", async(req, res)=> {
             success: true,
             data: shop
         })
-        
+
     } catch (err) {
         return res.json({
             success: false,
@@ -121,7 +121,7 @@ router.get("/:id/payment", async(req, res) =>{
 
   const readFile = async(req, res, next) => {
     try{
-        lineReader.eachLine('data.txt', function(line, last) {
+        lineReader.eachLine('../opencv-face-recognition/face_data.txt', function(line, last) {
           if (last) {
             req.name = line;
             next();
@@ -131,15 +131,15 @@ router.get("/:id/payment", async(req, res) =>{
         res.status(400).send(e)
       }
   }
-  
 
-  
+
+
 // Process payment
 router.post('/:id/payment', readFile, async(req, res) => {
-    
+
     const {amount, pin} = req.body;
 
-    const shop = await Shop.findById(req.params.id);    
+    const shop = await Shop.findById(req.params.id);
     if(shop)
     {
         const userName = req.name;
@@ -172,15 +172,16 @@ router.post('/:id/payment', readFile, async(req, res) => {
             })
         }
 
-        user.wallet -= amount;
+        user.wallet -= parseInt(amount);
+        shop.wallet+=parseInt(amount);
         try {
-         
+
             const transaction = new Transaction({
                 user,
                 shop,
                 amount
             })
-            
+
             await transaction.save();
 
             shop.transactions.unshift(transaction);
@@ -197,27 +198,28 @@ router.post('/:id/payment', readFile, async(req, res) => {
                 subject : `Your payment at ${shop.name} was successful`,
                 text : `Hello ${user.name}, \n\nYour payment of Rs. ${amount} on ${user.name} has been successfully processed! \n\nRegards,\nTeam FCB`
             };
-                
+
                 transporter.sendMail(HelperOptions,(err,info)=>{
                     if(err) throw err;
-            
+
                     console.log("The message was sent");
-            
+
             });
 
             return res.json({
                 success: true,
+                transactionId: transaction.id,
                 message: "Transaction successfull"
             })
-    
+
         } catch (err) {
             return res.json({
                 success: false,
                 message: err
             })
-            
+
         }
-          
+
     }
 
     return res.json({

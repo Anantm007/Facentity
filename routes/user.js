@@ -99,8 +99,8 @@ router.post('/:id/addMoney', async(req,res)=>{
         var chargeAmount = parseInt(req.body.amount);
         user.wallet+=chargeAmount
         await user.save()
-        res.send(user)
-        // res.redirect(`/${user._id}`)
+
+        res.redirect(`/user/${user._id}`)
     } catch(e){
         res.status(400).send(e)
     }
