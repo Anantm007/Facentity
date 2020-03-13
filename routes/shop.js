@@ -2,8 +2,6 @@ const express=require('express')
 const router= express.Router()
 const bcrypt=require('bcryptjs')
 
-const lineReader=require('line-reader')
-
 require('dotenv').config()
 
 
@@ -100,7 +98,6 @@ router.post('/login', async(req, res) => {
 // Display the payment page
 router.get("/:id/payment", async(req, res) =>{
     const shop = await Shop.findById(req.params.id);
-
     if(shop)
     {
         return res.status(200).render('shopping-checkout', {
@@ -118,116 +115,6 @@ router.get("/:id/payment", async(req, res) =>{
         message: "Invalid Shop"
     })
 })
-
-  const readFile = async(req, res, next) => {
-    try{
-        lineReader.eachLine('../opencv-face-recognition/face_data.txt', function(line, last) {
-          if (last) {
-            req.name = line;
-            next();
-          }
-        });
-      } catch(e){
-        res.status(400).send(e)
-      }
-  }
-
-
-
-// Process payment
-router.post('/:id/payment', readFile, async(req, res) => {
-
-    const {amount, pin} = req.body;
-
-    const shop = await Shop.findById(req.params.id);
-    if(shop)
-    {
-        const userName = req.name;
-
-        const user = await User.findOne({name: userName});
-        if(!user)
-        {
-            return res.json({
-                success: false,
-                message: "User not found"
-            })
-        }
-
-        const isMatch = await bcrypt.compare(pin,user.pin);
-
-        if(!isMatch)
-        {
-            return res.json({
-                success: false,
-                message: "invalid PIN"
-            })
-        }
-
-
-        if(amount > user.wallet)
-        {
-            return res.json({
-                success: false,
-                message: "Sorry, you do not have enough money"
-            })
-        }
-
-        user.wallet -= parseInt(amount);
-        shop.wallet+=parseInt(amount);
-        try {
-
-            const transaction = new Transaction({
-                user,
-                shop,
-                amount
-            })
-
-            await transaction.save();
-
-            shop.transactions.unshift(transaction);
-            user.transactions.unshift(transaction);
-
-            await user.save();
-            await shop.save();
-
-            // Send email
-            let HelperOptions ={
-
-                from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
-                to : user.email,
-                subject : `Your payment at ${shop.name} was successful`,
-                text : `Hello ${user.name}, \n\nYour payment of Rs. ${amount} on ${user.name} has been successfully processed! \n\nRegards,\nTeam FCB`
-            };
-
-                transporter.sendMail(HelperOptions,(err,info)=>{
-                    if(err) throw err;
-
-                    console.log("The message was sent");
-
-            });
-
-            return res.json({
-                success: true,
-                transactionId: transaction.id,
-                message: "Transaction successfull"
-            })
-
-        } catch (err) {
-            return res.json({
-                success: false,
-                message: err
-            })
-
-        }
-
-    }
-
-    return res.json({
-        success: false,
-        message: "Shop Not Found"
-    })
-})
-
 
 // List all the shop Transactions
 router.get("/:id/transactions", async(req, res) => {
