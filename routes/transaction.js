@@ -73,18 +73,18 @@ router.post('/:id/pay', async(req, res) => {
 
         if(!isMatch)
         {
-            return res.json({
-                success: false,
-                message: "invalid PIN"
+            return res.render('failure',{
+                message: "Transaction Failure Due to Invalid PIN",
+                user: user
             })
         }
 
 
         if(amount > user.wallet)
         {
-            return res.json({
-                success: false,
-                message: "Sorry, you do not have enough money"
+            return res.render('failure',{
+                message: "Transaction Failure Due to Insufficient Funds",
+                user: user
             })
         }
 
@@ -122,18 +122,20 @@ router.post('/:id/pay', async(req, res) => {
 
             });
 
-            return res.json({
-                success: true,
-                transactionId: transaction.id,
-                message: "Transaction successfull"
+            return res.render('success',{
+                message: "Transaction Successfull",
+                user: user
             })
 
         } catch (err) {
-            return res.json({
-                success: false,
-                message: err
+            return res.render('failure',{
+                message: "Transaction Failure",
+                user: user
             })
-
+            // return res.json({
+            //     success: false,
+            //     message: err
+            // })
         }
 
     }

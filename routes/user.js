@@ -100,9 +100,15 @@ router.post('/:id/addMoney', async(req,res)=>{
         user.wallet+=chargeAmount
         await user.save()
 
-        res.redirect(`/user/${user._id}`)
+        return res.render('success',{
+            message: "Add Money to Wallet Successfull",
+            user: user
+        })
     } catch(e){
-        res.status(400).send(e)
+        return res.render('failure',{
+            message: "Add Money to Wallet Failed",
+            user: user
+        })
     }
 })
 
