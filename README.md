@@ -1,2 +1,2 @@
-# Team-FCB-GTBIT
-Code for HackGtbit@2.0, Team FCB
+# FACENTITY
+Code for Facentity, a smart payment solution web app built using Python, dlib, imutils, face_recognition, OpenCV ,Nodejs, ExpressJs and EJS templating engine.
