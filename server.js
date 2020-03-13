@@ -73,6 +73,9 @@ app.use('/user',userRouter)
 app.use('/shop',shopRouter)
 app.use('/transaction', require("./routes/transaction"));
 
+app.get('/', async(req, res) => {
+  return res.render('landing');
+})
 // Starting the server
 app.listen(process.env.PORT || 3001, ()=>{
   console.log(`Server started on port ${process.env.PORT || 3001}`);
