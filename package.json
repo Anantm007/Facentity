@@ -27,7 +27,7 @@
     "line-reader": "^0.4.0",
     "mongodb": "^3.5.1",
     "mongoose": "^5.8.9",
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.16",
     "nodemon": "^2.0.2",
     "validator": "^12.1.0"
   }
